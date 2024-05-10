@@ -2,7 +2,7 @@ export default function AllNotes({ notes }) {
     return (
         <>
             {notes.map((note) => {
-                return <p>{note.title}</p>;
+                return <p key={note.id}>{note.title}</p>;
             })}
         </>
     );

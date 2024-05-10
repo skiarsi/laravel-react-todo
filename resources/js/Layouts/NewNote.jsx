@@ -1,22 +1,31 @@
 import {
     CheckCircleIcon,
-    ListBulletIcon,
     PhotoIcon,
+    SwatchIcon,
 } from "@heroicons/react/24/outline";
 import { router } from "@inertiajs/react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 export default function NewNote() {
     const [visibily, setVisibily] = useState(false);
-    const [noteTitle, setnoteTitle] = useState("");
-    const [textareaVal, setTextAreaVal] = useState("");
-    const textareaRef = useRef(null);
+    const [colorVisibily, setColorVisibily] = useState(false);
+    const [color, setColor] = useState("gray");
+    const [values, setValues] = useState({
+        title: "",
+        text: "",
+    });
 
+    function handleChange(e) {
+        const key = e.target.id;
+        const value = e.target.value;
+        setValues((values) => ({
+            ...values,
+            [key]: value,
+        }));
+    }
     function discareNote() {
         if (noteTitle.length > 0 || textareaVal.length > 0) {
             if (window.confirm("Are you sure you want to discare new note?")) {
-                setTextAreaVal("");
-                setnoteTitle("");
                 setVisibily(false);
             }
         } else {
@@ -26,29 +35,35 @@ export default function NewNote() {
 
     // sumit form
     const handleSubmit = (e) => {
-        e.preventDefault();
-    };
-
-    // new note
-    const newNote = (e) => {
-        // e.preventDefault();
-
-        router.post(route("home.newnote"));
+        router.post(route("home.newnote", values));
     };
 
     return (
         <>
             <div className="w-9/12 mx-auto md:ml-0 md:mr-auto">
-                <div className="w-full md:w-10/12 lg:w-8/12 shadow-lg dark:shadow-none bg-white border border-1 border-gray-300 dark:border-gray-600 dark:bg-gray-400 mx-auto mt-7 rounded-md">
-                    <form onSubmit={() => handleSubmit()}>
-                        <div className="w-full dark:bg-gray-400 p-0">
+                <div
+                    className={
+                        "w-full md:w-10/12 lg:w-8/12 shadow-lg dark:shadow-none bg-" +
+                        color +
+                        "-100 border border-1 border-gray-300 dark:border-gray-600 dark:bg-" +
+                        color +
+                        "-300 mx-auto mt-7 rounded-md"
+                    }
+                >
+                    <form
+                        method="post"
+                        onSubmit={(event) => {
+                            event.preventDefault();
+                            handleSubmit();
+                        }}
+                    >
+                        <div className="w-full p-0">
                             <input
-                                value={noteTitle}
-                                onChange={(event) => {
-                                    setnoteTitle(event.target.value);
-                                }}
+                                value={values.title}
+                                onChange={handleChange}
+                                id="title"
                                 type="text"
-                                name=""
+                                name="title"
                                 className="w-full border-0 border-b-2 border-b-gray-600 bg-transparent focus:ring-0 focus:border-b-gray-600"
                                 placeholder="title"
                                 onClick={() => {
@@ -56,22 +71,89 @@ export default function NewNote() {
                                 }}
                             />
                             <textarea
-                                ref={textareaRef}
-                                value={textareaVal}
-                                rows={2}
+                                value={values.text}
+                                rows={4}
                                 placeholder="Take a note"
-                                onChange={(event) => {
-                                    setTextAreaVal(event.target.value);
-                                }}
+                                onChange={handleChange}
+                                id="text"
+                                name="text"
                                 className={
                                     (visibily ? "" : "hidden") +
                                     " w-full my-0 border-0 h-auto focus:ring-0 focus:border-0 bg-transparent"
                                 }
                             ></textarea>
                         </div>
-                        <div className="w-full px-3 flex flex-row py-1">
+                        <div className="relative w-full px-3 flex flex-row py-1">
                             <PhotoIcon className="w-10 avatar rounded-full hover:bg-gray-200 p-2 cursor-pointer" />
                             <CheckCircleIcon className="w-10 avatar rounded-full hover:bg-gray-200 p-2 cursor-pointer" />
+                            <SwatchIcon
+                                onClick={() => {
+                                    setColorVisibily(true);
+                                }}
+                                className={
+                                    (colorVisibily ? "hidden " : "flex ") +
+                                    "bg-" +
+                                    color +
+                                    "-300 " +
+                                    "w-10 avatar rounded-full hover:bg-gray-200 p-2 cursor-pointer"
+                                }
+                            />
+                            <div
+                                className={
+                                    (colorVisibily ? "flex " : "hidden ") +
+                                    "w-11/12 mx-auto bg-white dark:bg-gray-200 pl-1 pr-4 py-0 pt-1 h-11 border border-gray-400 rounded-xl shadow-md"
+                                }
+                            >
+                                <div
+                                    onClick={() => {
+                                        setColor("gray");
+                                    }}
+                                    className="avatar cursor-pointer bg-white-300 h-9 w-9 rounded-full border-2 border-gray-700"
+                                >
+                                    &nbsp;
+                                </div>
+
+                                <div
+                                    onClick={() => {
+                                        setColor("red");
+                                    }}
+                                    className="avatar cursor-pointer ml-1 bg-red-300 h-9 w-9 rounded-full border-2 border-gray-700"
+                                >
+                                    &nbsp;
+                                </div>
+                                <div
+                                    onClick={() => {
+                                        setColor("blue");
+                                    }}
+                                    className="avatar cursor-pointer ml-1 bg-blue-300 h-9 w-9 rounded-full border-2 border-gray-700"
+                                >
+                                    &nbsp;
+                                </div>
+                                <div
+                                    onClick={() => {
+                                        setColor("green");
+                                    }}
+                                    className="avatar cursor-pointer ml-1 bg-green-300 h-9 w-9 rounded-full border-2 border-gray-700"
+                                >
+                                    &nbsp;
+                                </div>
+                                <div
+                                    onClick={() => {
+                                        setColor("yellow");
+                                    }}
+                                    className="avatar cursor-pointer ml-1 bg-yellow-300 h-9 w-9 rounded-full border-2 border-gray-700"
+                                >
+                                    &nbsp;
+                                </div>
+                                <div
+                                    onClick={() => {
+                                        setColor("purple");
+                                    }}
+                                    className="avatar cursor-pointer ml-1 bg-purple-300 h-9 w-9 rounded-full border-2 border-gray-700"
+                                >
+                                    &nbsp;
+                                </div>
+                            </div>
                         </div>
                         <div
                             className={
@@ -80,10 +162,7 @@ export default function NewNote() {
                             }
                         >
                             <button
-                                type="button"
-                                onClick={() => {
-                                    newNote();
-                                }}
+                                type="submit"
                                 className="btn btn-link text-md font-normal text-gray-600 dark:bg-gray-100 rounded-sm no-underline btn-sm"
                             >
                                 Add Note

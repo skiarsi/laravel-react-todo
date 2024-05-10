@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Note;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class HomeController extends Controller
@@ -25,7 +27,17 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
-        echo 'ok';
+        try {
+            //code...
+            $notes = new Note();
+            $notes->user_id = Auth::user()->id;
+            $notes->noteuid = Str::orderedUuid()->getHex()->toString();
+            $notes->title = $request->title;
+            $notes->text = $request->text;
+            $notes->save();
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+        }
     }
 
     /**

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->text('text');
             $table->boolean('pined')->default(false);
+            $table->char('color')->default('white');
             $table->timestamps();
         });
     }
