@@ -27,6 +27,7 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         try {
             //code...
             $notes = new Note();
@@ -34,6 +35,7 @@ class HomeController extends Controller
             $notes->noteuid = Str::orderedUuid()->getHex()->toString();
             $notes->title = $request->title;
             $notes->text = $request->text;
+            $notes->color = $request->color;
             $notes->save();
         } catch (\Throwable $th) {
             dd($th->getMessage());

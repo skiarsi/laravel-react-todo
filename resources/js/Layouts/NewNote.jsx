@@ -11,25 +11,29 @@ export default function NewNote() {
     const [visibily, setVisibily] = useState(false);
     const [colorVisibily, setColorVisibily] = useState(false);
     const [color, setColor] = useState("#DCDCDC");
-    const [values, setValues] = useState({
-        title: "",
-        text: "",
-    });
+    const [title, setTitle] = useState("");
+    const [text, setText] = useState("");
+    // const [values, setValues] = useState({
+    //     title: "",
+    //     text: "",
+    // });
 
-    function handleChange(e) {
-        const key = e.target.id;
-        const value = e.target.value;
-        setValues((values) => ({
-            ...values,
-            [key]: value,
-        }));
-    }
+    // function handleChange(e) {
+    //     const key = e.target.id;
+    //     const value = e.target.value;
+    //     setValues((values) => ({
+    //         ...values,
+    //         [key]: value,
+    //     }));
+    // }
     function discareNote() {
-        if (values.title.length > 0 || values.text.length > 0) {
+        if (title.length > 0 || text.length > 0) {
             if (window.confirm("Are you sure you want to discare new note?")) {
                 setVisibily(false);
-                values.title = "";
-                values.text = "";
+                // set every thing as default
+                setTitle("");
+                setText("");
+                setColor("#DCDCDC");
             }
         } else {
             setVisibily(false);
@@ -38,7 +42,12 @@ export default function NewNote() {
 
     // sumit form
     const handleSubmit = (e) => {
-        router.post(route("home.newnote", values));
+        if (title.length > 0 || text.length > 0) {
+            // send data to server
+            router.post(route("home.newnote", [{'color':color,'title':title,'text':text}]));
+        } else {
+            alert("Not any datas for new note");
+        }
     };
 
     return (
@@ -57,11 +66,16 @@ export default function NewNote() {
                             handleSubmit();
                         }}
                     >
-                        <input type="hidden" name="color" value={color} />
+                        <input
+                            type="hidden"
+                            name="inpcolor"
+                            value={color}
+                            onChange={(e) => setColor(e.target.value)}
+                        />
                         <div className="w-full p-0 ">
                             <input
-                                value={values.title}
-                                onChange={handleChange}
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
                                 id="title"
                                 type="text"
                                 name="title"
@@ -72,10 +86,10 @@ export default function NewNote() {
                                 }}
                             />
                             <textarea
-                                value={values.text}
+                                value={text}
+                                onChange={(e) => setText(e.target.value)}
                                 rows={4}
                                 placeholder="Take a note"
-                                onChange={handleChange}
                                 id="text"
                                 name="text"
                                 className={
