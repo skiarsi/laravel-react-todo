@@ -1,3 +1,4 @@
+import ColorChooserPanel from "@/Components/ColorChooserPanel";
 import {
     CheckCircleIcon,
     PhotoIcon,
@@ -9,7 +10,7 @@ import { useState } from "react";
 export default function NewNote() {
     const [visibily, setVisibily] = useState(false);
     const [colorVisibily, setColorVisibily] = useState(false);
-    const [color, setColor] = useState("gray");
+    const [color, setColor] = useState("#DCDCDC");
     const [values, setValues] = useState({
         title: "",
         text: "",
@@ -24,9 +25,11 @@ export default function NewNote() {
         }));
     }
     function discareNote() {
-        if (noteTitle.length > 0 || textareaVal.length > 0) {
+        if (values.title.length > 0 || values.text.length > 0) {
             if (window.confirm("Are you sure you want to discare new note?")) {
                 setVisibily(false);
+                values.title = "";
+                values.text = "";
             }
         } else {
             setVisibily(false);
@@ -42,12 +45,9 @@ export default function NewNote() {
         <>
             <div className="w-9/12 mx-auto md:ml-0 md:mr-auto">
                 <div
+                    style={{ backgroundColor: color }}
                     className={
-                        "w-full md:w-10/12 lg:w-8/12 shadow-lg dark:shadow-none bg-" +
-                        color +
-                        "-100 border border-1 border-gray-300 dark:border-gray-600 dark:bg-" +
-                        color +
-                        "-300 mx-auto mt-7 rounded-md"
+                        " w-full md:w-10/12 lg:w-8/12 shadow-lg dark:shadow-none border border-1 border-gray-300 dark:border-gray-600 mx-auto mt-7 rounded-md"
                     }
                 >
                     <form
@@ -57,7 +57,8 @@ export default function NewNote() {
                             handleSubmit();
                         }}
                     >
-                        <div className="w-full p-0">
+                        <input type="hidden" name="color" value={color} />
+                        <div className="w-full p-0 ">
                             <input
                                 value={values.title}
                                 onChange={handleChange}
@@ -92,67 +93,22 @@ export default function NewNote() {
                                 }}
                                 className={
                                     (colorVisibily ? "hidden " : "flex ") +
-                                    "bg-" +
-                                    color +
-                                    "-300 " +
                                     "w-10 avatar rounded-full hover:bg-gray-200 p-2 cursor-pointer"
                                 }
                             />
                             <div
                                 className={
                                     (colorVisibily ? "flex " : "hidden ") +
-                                    "w-11/12 mx-auto bg-white dark:bg-gray-200 pl-1 pr-4 py-0 pt-1 h-11 border border-gray-400 rounded-xl shadow-md"
+                                    "w-auto gap-1 ml-0 mr-auto bg-gray-100  pl-2 pr-2 py-0 pt-1.5 h-10 border border-gray-400 rounded-lg shadow-md"
                                 }
                             >
-                                <div
-                                    onClick={() => {
-                                        setColor("gray");
+                                <ColorChooserPanel
+                                    click={(event) => {
+                                        setColor(event);
+                                        setColorVisibily(false);
                                     }}
-                                    className="avatar cursor-pointer bg-white-300 h-9 w-9 rounded-full border-2 border-gray-700"
-                                >
-                                    &nbsp;
-                                </div>
-
-                                <div
-                                    onClick={() => {
-                                        setColor("red");
-                                    }}
-                                    className="avatar cursor-pointer ml-1 bg-red-300 h-9 w-9 rounded-full border-2 border-gray-700"
-                                >
-                                    &nbsp;
-                                </div>
-                                <div
-                                    onClick={() => {
-                                        setColor("blue");
-                                    }}
-                                    className="avatar cursor-pointer ml-1 bg-blue-300 h-9 w-9 rounded-full border-2 border-gray-700"
-                                >
-                                    &nbsp;
-                                </div>
-                                <div
-                                    onClick={() => {
-                                        setColor("green");
-                                    }}
-                                    className="avatar cursor-pointer ml-1 bg-green-300 h-9 w-9 rounded-full border-2 border-gray-700"
-                                >
-                                    &nbsp;
-                                </div>
-                                <div
-                                    onClick={() => {
-                                        setColor("yellow");
-                                    }}
-                                    className="avatar cursor-pointer ml-1 bg-yellow-300 h-9 w-9 rounded-full border-2 border-gray-700"
-                                >
-                                    &nbsp;
-                                </div>
-                                <div
-                                    onClick={() => {
-                                        setColor("purple");
-                                    }}
-                                    className="avatar cursor-pointer ml-1 bg-purple-300 h-9 w-9 rounded-full border-2 border-gray-700"
-                                >
-                                    &nbsp;
-                                </div>
+                                    class="avatar cursor-pointer bg-white-300 h-7 w-7 rounded-full border-2 border-gray-700"
+                                />
                             </div>
                         </div>
                         <div
