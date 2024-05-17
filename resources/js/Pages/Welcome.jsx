@@ -1,9 +1,11 @@
-import { Link, Head, usePage } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 import Header from "@/Layouts/Header";
 import SideMenu from "@/Layouts/SideMenu";
 import NewNote from "@/Layouts/NewNote";
 import AllNotes from "@/Components/AllNotes";
-export default function Welcome({ auth, storage, allNotes }) {
+import PinedNotes from "@/Components/PinedNotes";
+export default function Welcome({ auth, storage, allNotes, allPinedNotes }) {
+    // console.log();
     return (
         <>
             <Head title="ToDo" />
@@ -15,6 +17,11 @@ export default function Welcome({ auth, storage, allNotes }) {
                 <div className="w-full md:w-9/12 flex flex-col py-6">
                     <NewNote />
                     <div className=" py-8">
+                        {allPinedNotes.length > 0 ? (
+                            <PinedNotes notes={allPinedNotes} />
+                        ) : (
+                            ""
+                        )}
                         <AllNotes notes={allNotes} />
                     </div>
                 </div>

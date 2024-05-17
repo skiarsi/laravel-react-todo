@@ -13,19 +13,7 @@ export default function NewNote() {
     const [color, setColor] = useState("#DCDCDC");
     const [title, setTitle] = useState("");
     const [text, setText] = useState("");
-    // const [values, setValues] = useState({
-    //     title: "",
-    //     text: "",
-    // });
 
-    // function handleChange(e) {
-    //     const key = e.target.id;
-    //     const value = e.target.value;
-    //     setValues((values) => ({
-    //         ...values,
-    //         [key]: value,
-    //     }));
-    // }
     function discareNote() {
         if (title.length > 0 || text.length > 0) {
             if (window.confirm("Are you sure you want to discare new note?")) {
@@ -44,7 +32,17 @@ export default function NewNote() {
     const handleSubmit = (e) => {
         if (title.length > 0 || text.length > 0) {
             // send data to server
-            router.post(route("home.newnote", [{'color':color,'title':title,'text':text}]));
+            const datas = {
+                color: color,
+                text: text,
+                title: title
+            };
+            router.post(route("home.newnote", datas));
+            setVisibily(false);
+            // set every thing as default
+            setTitle("");
+            setText("");
+            setColor("#DCDCDC");
         } else {
             alert("Not any datas for new note");
         }
@@ -52,11 +50,11 @@ export default function NewNote() {
 
     return (
         <>
-            <div className="w-9/12 mx-auto md:ml-0 md:mr-auto">
+            <div className="w-10/12 md:w-9/12 lg:w-7/12 mx-auto ">
                 <div
                     style={{ backgroundColor: color }}
                     className={
-                        " w-full md:w-10/12 lg:w-8/12 shadow-lg dark:shadow-none border border-1 border-gray-300 dark:border-gray-600 mx-auto mt-7 rounded-md"
+                        " w-full shadow-lg dark:shadow-none border border-1 border-gray-300 dark:border-gray-600 mx-auto mt-7 rounded-md"
                     }
                 >
                     <form

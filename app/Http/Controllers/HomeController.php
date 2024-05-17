@@ -18,7 +18,14 @@ class HomeController extends Controller
     {
         return Inertia::render('Welcome',[
             'storage' => URL::asset('storage'),
-            'allNotes'=> Note::where('user_id',auth()->user()->id)->get(),
+            'allNotes'=> Note::
+                            where('pined',0)->
+                            where('user_id',auth()->user()->id)->
+                            orderby('id','DESC')->get(),
+            'allPinedNotes'=> Note::
+                            where('user_id',auth()->user()->id)->
+                            where('pined',1)->
+                            orderby('id','DESC')->get(),
         ]);
     }
 
@@ -27,7 +34,6 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
         try {
             //code...
             $notes = new Note();
