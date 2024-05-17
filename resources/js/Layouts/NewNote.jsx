@@ -14,7 +14,7 @@ export default function NewNote() {
     const [title, setTitle] = useState("");
     const [text, setText] = useState("");
 
-    function discareNote() {
+    const discareNote =() => {
         if (title.length > 0 || text.length > 0) {
             if (window.confirm("Are you sure you want to discare new note?")) {
                 setVisibily(false);

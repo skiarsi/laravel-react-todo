@@ -1,3 +1,5 @@
+import { RiNotificationBadgeLine } from "react-icons/ri";
+
 export default function Header({ authentication, storage }) {
     return (
         <>
@@ -5,11 +7,7 @@ export default function Header({ authentication, storage }) {
                 <div className="w-3/12 mr-auto ms-o py-2">
                     <div className="w-full flex flex-row">
                         <div className="w-5/12">
-                            <img
-                                src={storage + "/imgs/" + "todo.png"}
-                                className="h-10"
-                                alt=""
-                            />
+                            <RiNotificationBadgeLine className="text-4xl mx-3 mt-1 text-gray-900 dark:text-gray-100" />
                         </div>
                     </div>
                 </div>

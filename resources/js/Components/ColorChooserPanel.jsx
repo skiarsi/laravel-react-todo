@@ -1,8 +1,6 @@
-import { useState } from "react";
 import ColorChooser from "./ColorChooser";
 
 export default function ColorChooserPanel(props) {
-    const [color, setColor] = useState("#DCDCDC");
     return (
         <>
             <ColorChooser
