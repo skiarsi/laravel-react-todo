@@ -62,4 +62,25 @@ class NoteController extends Controller
     {
         //
     }
+
+    /**
+     * pin note
+     */
+
+    public function pinnote(Request $request, Note $note ) {
+        $pined=Note::where('noteuid',$request->noteId)
+                ->update([
+                    'pined' => 1
+                ]);
+    }
+
+    /**
+     * unpin note
+     */
+    public function unpinnote(Request $request, Note $note ) {
+        $pined=Note::where('noteuid',$request->noteId)
+                ->update([
+                    'pined' => 0
+                ]);
+    }
 }

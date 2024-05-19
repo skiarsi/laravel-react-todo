@@ -12,4 +12,9 @@ class Note extends Model
     protected $fillable = [
         'user_id','noteuid','title','text','pined'
     ];
+
+    // public function getRouteKey()
+    // {
+    //     return 'noteuid';
+    // }
 }

@@ -1,19 +1,23 @@
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
+import { router } from "@inertiajs/react";
 import { RiUnpinFill } from "react-icons/ri";
 import { RiPushpin2Fill } from "react-icons/ri";
 
 
 export default function OneNote(props) {
     const unpinNote = (uid) => {
-        alert("unpin" + uid);
+        router.post(route("note.unpin", { noteId: uid }), {
+            preserveState: false,
+            preserveScroll: true,
+        });
     }
     const pinNote = (uid) => {
-        alert("pin" + uid);
+        router.post(route("note.pin", { "noteId": uid }));
     };
     return (
         <>
             <div
-                className="w-full rounded-lg"
+                className="w-full rounded-lg hover:shadow-md hover:shadow-slate-400 dark:hover:shadow-none"
                 style={{
                     backgroundColor:
                         props.datas.color === "white"
