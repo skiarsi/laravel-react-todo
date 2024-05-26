@@ -24,8 +24,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/',[HomeController::class, 'index'])->name('home.index');
     Route::post('/',[HomeController::class, 'store'])->name('home.newnote');
 
-    Route::post('/pin',[NoteController::class, 'pinnote'])->name('note.pin');
-    Route::post('/unpin',[NoteController::class, 'unpinnote'])->name('note.unpin');
+    //new note
+    Route::post('/newnote',[NoteController::class, 'store'])->name('note.new');
+    // Route::post('/pin',[NoteController::class, 'pinnote'])->name('note.pin');
+    Route::get('/pin',[NoteController::class, 'pinnote'])->name('note.pin');
+    Route::get('/unpin',[NoteController::class, 'unpinnote'])->name('note.unpin');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

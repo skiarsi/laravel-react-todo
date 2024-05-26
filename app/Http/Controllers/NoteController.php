@@ -28,7 +28,7 @@ class NoteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**
@@ -68,6 +68,8 @@ class NoteController extends Controller
      */
 
     public function pinnote(Request $request, Note $note ) {
+        // dd($request->noteId);
+        // dd(Note::where('noteuid', $request->noteId)->first());
         $pined=Note::where('noteuid',$request->noteId)
                 ->update([
                     'pined' => 1

@@ -30,6 +30,7 @@ export default function NewNote() {
 
     // sumit form
     const handleSubmit = (e) => {
+        // e.preventDefault();
         if (title.length > 0 || text.length > 0) {
             // send data to server
             const datas = {
@@ -59,10 +60,7 @@ export default function NewNote() {
                 >
                     <form
                         method="post"
-                        onSubmit={(event) => {
-                            event.preventDefault();
-                            handleSubmit();
-                        }}
+                        onSubmit={handleSubmit}
                     >
                         <input
                             type="hidden"

@@ -1,15 +1,12 @@
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
-import { router } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import { RiUnpinFill } from "react-icons/ri";
 import { RiPushpin2Fill } from "react-icons/ri";
 
 
 export default function OneNote(props) {
     const unpinNote = (uid) => {
-        router.post(route("note.unpin", { noteId: uid }), {
-            preserveState: false,
-            preserveScroll: true,
-        });
+        router.post(route("note.unpin", { noteId: uid }));
     }
     const pinNote = (uid) => {
         router.post(route("note.pin", { "noteId": uid }));
@@ -28,19 +25,23 @@ export default function OneNote(props) {
                 <div className="w-100 group py-5 px-5 relative">
                     <div className="absolute right-2 top-2">
                         {props.datas.pined === 1 ? (
-                            <RiUnpinFill
-                                onClick={() => {
-                                    unpinNote(props.datas.noteuid);
-                                }}
-                                className="w-6 text-xl group-hover:opacity-100 opacity-30 cursor-pointer"
-                            />
+                            <Link
+                                preserveScroll
+                                href={route("note.unpin", {
+                                    noteId: props.datas.noteuid,
+                                })}
+                            >
+                                <RiUnpinFill className="w-6 text-xl group-hover:opacity-100 opacity-30 cursor-pointer" />
+                            </Link>
                         ) : (
-                            <RiPushpin2Fill
-                                onClick={() => {
-                                    pinNote(props.datas.noteuid);
-                                }}
-                                className="w-6 text-xl group-hover:opacity-100 opacity-30 cursor-pointer"
-                            />
+                            <Link
+                                preserveScroll
+                                href={route("note.pin", {
+                                    noteId: props.datas.noteuid,
+                                })}
+                            >
+                                <RiPushpin2Fill className="w-6 text-xl group-hover:opacity-100 opacity-30 cursor-pointer" />
+                            </Link>
                         )}
                     </div>
                     {props.datas.title ? (
