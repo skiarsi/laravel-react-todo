@@ -26,7 +26,6 @@ Route::middleware('auth')->group(function () {
 
     //new note
     Route::post('/newnote',[NoteController::class, 'store'])->name('note.new');
-    // Route::post('/pin',[NoteController::class, 'pinnote'])->name('note.pin');
     Route::get('/pin',[NoteController::class, 'pinnote'])->name('note.pin');
     Route::get('/unpin',[NoteController::class, 'unpinnote'])->name('note.unpin');
 

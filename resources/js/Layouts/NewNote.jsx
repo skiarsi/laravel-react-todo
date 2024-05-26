@@ -30,13 +30,12 @@ export default function NewNote() {
 
     // sumit form
     const handleSubmit = (e) => {
-        // e.preventDefault();
         if (title.length > 0 || text.length > 0) {
             // send data to server
             const datas = {
                 color: color,
                 text: text,
-                title: title
+                title: title,
             };
             router.post(route("home.newnote", datas));
             setVisibily(false);
@@ -60,7 +59,10 @@ export default function NewNote() {
                 >
                     <form
                         method="post"
-                        onSubmit={handleSubmit}
+                        onSubmit={(event) => {
+                            event.preventDefault();
+                            handleSubmit();
+                        }}
                     >
                         <input
                             type="hidden"
